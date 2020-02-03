@@ -7,7 +7,8 @@ void command_parse(char* line);
 
 int main(int argc, char* argv[]){
   if (argc < 2){
-    printf("FATAL: no file passed");
+    printf("FATAL: no file passed\n");
+    return 0;
   }
   FILE* inFile = fopen(argv[1], "r");
   if(inFile == NULL){
