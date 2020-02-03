@@ -1,1 +1,1 @@
-gcc -o apc argumentParser.c -lpcre
+gcc -o apc argumentParser.c -lpcre -ggdb
