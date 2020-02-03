@@ -4,6 +4,7 @@
 #include <pcre.h>
 
 void command_parse(char* line);
+void apc_print(char* line);
 
 int main(int argc, char* argv[]){
   if (argc < 2){
@@ -49,8 +50,7 @@ int main(int argc, char* argv[]){
       printf("rc is: %d\n", rc);
       printf("error on line %d, unrecognised command \"%s\"\n", line, buffer);
     }else {
-      char* brokenLine = strtok(buffer, " ");
-      command_parse(brokenLine);
+      command_parse(buffer);
     }
     line++;
   }
@@ -58,15 +58,27 @@ int main(int argc, char* argv[]){
 }
 
 void command_parse(char* line){
-  if(strcmp(line, "print")==0){
-    line = strtok(NULL, " ");
-    int line_length = strlen(line); 
-    char buffer[100];
-    for (line; line!=NULL && (char)line+(5-1) != '"'; line=strtok(NULL, " ")){
-      printf("%s ", line);
-    }
-    printf("\n");
+  char* fullLine = strdup(line);
+  char* brokenLine = strtok(line, " ");
+  if(strcmp(brokenLine, "print")==0){
+    apc_print(fullLine);
   }else {
     printf("match found: %s\n", line);
   }
+}
+
+
+void apc_print(char* line){ 
+  int strstart = 0;
+  line += 6;
+  for (strstart; strstart < 2 && (char)*line!='\0'; line++){
+    if((char)*line == '"'){
+      strstart++;
+    }else{
+      if(strstart!=0){
+	printf("%c", (char)*line);
+      }
+    }
+  }
+  printf("\n");
 }
