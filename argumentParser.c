@@ -6,6 +6,9 @@
 void command_parse(char* line);
 
 int main(int argc, char* argv[]){
+  if (argc < 2){
+    printf("FATAL: no file passed");
+  }
   FILE* inFile = fopen(argv[1], "r");
   if(inFile == NULL){
     printf("FATAL: coulnd't open file %s\n", argv[1]);
